@@ -212,3 +212,14 @@ deploy:
   api_key: $HEROKU_API_KEY
   app: montanamendy-from-travis
   ```
+If all is successful, you should see this in your Travis buildlog: 
+
+<img width="1054" alt="Screen Shot 2022-02-11 at 11 11 21 AM" src="https://user-images.githubusercontent.com/20936398/153654615-eeb8a300-5b0b-4c74-8de5-a61b965b8199.png">
+
+## Conclusion 
+
+There you go, we just used unit testing, Spring Boot and Travis CI. The integration was kind of easy wasn't it? 
+
+As always if you have any questions, any questions at all, please email me at [montana@travis-ci.org](mailto:montana@travis-ci.org).
+
+Happy building!
