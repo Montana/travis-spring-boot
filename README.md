@@ -98,3 +98,28 @@ Add the Maven specific JaCoCo plugin to `pom.xml` with flags that define what is
     </executions>
 </plugin>
 ```
+
+## Classifiers 
+
+To fix the classifier issue, the workaround is to add the classifier configuration to `spring-boot-maven-plugin` as follows:
+
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <classifier>exec</classifier>
+    </configuration>
+</plugin>
+```
+Now let's take a look at our `travis.yml` file, and be on the lookout for the `script:` hook:
+
+```yaml
+language: java
+jdk: oraclejdk8
+  
+script:
+- ./mvnw clean install -B
+```
+
+You can see in our `script:` hook we've added `./mvnw vlean install -B` and that's going to be key. Now let's get a `.travis.yml` that has SonarCloud
