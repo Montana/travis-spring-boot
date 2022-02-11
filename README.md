@@ -212,7 +212,7 @@ deploy:
   api_key: $HEROKU_API_KEY
   app: montanamendy-from-travis
   ```
-If all is successful, you should see this in your Travis buildlog: 
+If all is successful, you should see this in your Travis build log: 
 
 <img width="1054" alt="Screen Shot 2022-02-11 at 11 11 21 AM" src="https://user-images.githubusercontent.com/20936398/153654615-eeb8a300-5b0b-4c74-8de5-a61b965b8199.png">
 
