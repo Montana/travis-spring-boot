@@ -33,3 +33,68 @@ language: java
 jdk: oraclejdk8
 ```
 Now this just invokes Travis into your project, this is sufficient enough for Travis to see that there's a build that needs to be triggered, how Travis is architected Travis will run `mvn test -B` for building the project. If Travis finds `mvnw wrapper` then it will be used like `./mvnw test -B.` as you can see it's a bit recursive. You can instruct Travis to run different commands in your `script:` hook in your `.travis.yml`.
+
+## Adding Coverage Checks for Travis 
+
+Add the Maven specific JaCoCo plugin to `pom.xml` with flags that define what is the desired code coverage percentage, classes, etc:
+
+```xml
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.7.9</version>
+    <configuration>
+        <excludes>
+            <exclude>in/sivalabs/freelancerkit/entities/*</exclude>
+            <exclude>in/sivalabs/freelancerkit/*Application</exclude>
+        </excludes>
+    </configuration>
+    <executions>
+        <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>default-prepare-agent-integration</id>
+            <goals>
+                <goal>prepare-agent-integration</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>default-report</id>
+            <phase>verify</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>default-report-integration</id>
+            <goals>
+                <goal>report-integration</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>default-check</id>
+            <goals>
+                <goal>check</goal>
+            </goals>
+            <configuration>
+                <rules>
+                 <rule implementation="org.jacoco.maven.RuleConfiguration">
+                        <element>BUNDLE</element>
+                        <limits>
+                            <limit implementation="org.jacoco.report.check.Limit">
+                                <counter>COMPLEXITY</counter>
+                                <value>COVEREDRATIO</value>
+                                <minimum>0.60</minimum>
+                            </limit>
+                        </limits>
+                    </rule>
+                </rules>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
