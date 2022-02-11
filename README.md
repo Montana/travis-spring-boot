@@ -142,3 +142,20 @@ script:
 - ./mvnw clean install -B
 - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 ```
+
+Now let's build a Dockerfile that mirrors essentially that `.travis.yml`: 
+
+```Dockerfile
+ROM frolvlad/alpine-oraclejdk8:slim
+VOLUME /tmp
+ADD target/freelancer-kit-0.0.1-SNAPSHOT.jar app.jar
+RUN sh -c 'touch /app.jar'
+ENV JAVA_OPTS="-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n"
+EXPOSE 8080 8787
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=docker -jar /app.jar" ]
+```
+That Dockerfile is going to grab `alpine-oraclejdk8:slim` the `slim` flag is making sure it's grabbinb the slim version. 
+
+## Deploying 
+
+Now let's say you're using Heroku for deployment, you'll need to grab all those credentials as well and add them to your `deploy:` hook.
