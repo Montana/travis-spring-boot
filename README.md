@@ -122,4 +122,23 @@ script:
 - ./mvnw clean install -B
 ```
 
-You can see in our `script:` hook we've added `./mvnw vlean install -B` and that's going to be key. Now let's get a `.travis.yml` that has SonarCloud
+You can see in our `script:` hook we've added `./mvnw vlean install -B` and that's going to be key. Now let's get a `.travis.yml` that has SonarCloud. Now remember to set your `environment variables` you grabbed from SonarCloud and also add them to Travis, here's a `.travis.yml` demonstrating this:
+
+```yaml
+language: java
+jdk: oraclejdk8
+  
+env:
+  global:
+  - secure: (ENV_VARS_HERE)
+  
+addons:
+  sonarcloud:
+    organization: "sivaprasadreddy-github"
+    token:
+      secure: $SONAR_TOKEN
+  
+script:
+- ./mvnw clean install -B
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+```
