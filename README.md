@@ -1,2 +1,35 @@
-# travis-spring-boot
-Travis CI + Spring Boot
+---
+title: "Travis and Spring Boot"
+created_at: Fri Feb 11 2022 15:00:00 EDT
+author: Montana Mendy
+layout: post
+permalink: 2022-02-11-springboot
+category: news
+excerpt_separator: <!-- more --> 
+tags:
+  - news
+  - feature
+  - infrastructure
+  - community
+---
+
+![Untitled-3](https://user-images.githubusercontent.com/20936398/153650476-6310d2c1-7692-45a7-962d-77f983f747c8.png)
+
+
+In this series of tech blog Friday by Montana Mendy, we will learn how to run maven build goals, perform test coverage validation whether this be Coveralls, SonarCloud or Docker. Are you ready? I'm ready. Let's jump in.
+
+<!-- more --> 
+
+## Getting started
+
+There's choices and choices. In this example I'll be using Maven, but you can obviously use Gradle as well. Next, you'll want to create a [SpringBoot project](http://start.spring.io/) either using http://start.spring.io or alternatively use your IDE. 
+
+## Create your `.travis.yml` file
+
+We have to enable your `.travis.yml` file and the way we do that is by the following: 
+
+```yaml
+language: java
+jdk: oraclejdk8
+```
+Now this just invokes Travis into your project, this is sufficient enough for Travis to see that there's a build that needs to be triggered, how Travis is architected Travis will run `mvn test -B` for building the project. If Travis finds `mvnw wrapper` then it will be used like `./mvnw test -B.` as you can see it's a bit recursive. You can instruct Travis to run different commands in your `script:` hook in your `.travis.yml`.
